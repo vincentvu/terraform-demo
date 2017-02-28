@@ -21,6 +21,7 @@ module "vpc" {
 module "iam_profiles" {
   source = "/home/vincent/research/terraform/terraform-modules/IAM/iam-profiles"
   env = "demo"
+  pillar_bucket = "vincent.vu-demo-saltstack-pillars"
 }
 
 module "sgs" {
@@ -48,9 +49,9 @@ module "wordpress-instance" {
   instance_type = "t2.micro"
   security_group_ids = [ "${module.sgs.sg_public_wordpress_id}" ]
   associate_public_ip_address = "true"
-  role ="wordpress"
+  roles ="wordpress"
   name = "wordpress"
-  user_data = "/home/vincent/research/terraform/terraform-demo/ec2-user-data/demo-user-data.yaml"
+  user_data = "ec2-user-data/demo-user-data.yaml"
 }
 
 

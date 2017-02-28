@@ -21,7 +21,7 @@ resource "aws_instance" "instance" {
   tags {
     Name = "${var.env}-${var.name}"
     Environment = "${var.env}"
-    Roles = "${var.role}"
+    Roles = "${var.roles}"
   }
 
   user_data = "${file(var.user_data)}"

@@ -1,4 +1,5 @@
 variable "env" {}
+variable "pillar_bucket" {}
 
 resource "aws_iam_role" "wordpress_instance" {
   name = "${var.env}-wordpress-instance"
@@ -27,7 +28,6 @@ resource "aws_iam_policy" "wordpress_instance" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "${var.env}DescribeTags",
       "Effect": "Allow",
       "Action": [
         "ec2:DescribeTags"
@@ -37,7 +37,20 @@ resource "aws_iam_policy" "wordpress_instance" {
       ]
     },
     {
-      "Sid": "${var.env}cwlogs",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${var.pillar_bucket}",
+        "arn:aws:s3:::${var.pillar_bucket}/top.sls",
+        "arn:aws:s3:::${var.pillar_bucket}/base",
+        "arn:aws:s3:::${var.pillar_bucket}/base/*",
+        "arn:aws:s3:::${var.pillar_bucket}/wordpress/*"
+      ]
+    },
+    {
       "Effect": "Allow",
       "Action": [
         "logs:CreateLogGroup",

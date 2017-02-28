@@ -2,8 +2,8 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "role" {
-  description = "Functional role of instance."
+variable "roles" {
+  description = "Functional roles of instance."
 }
 
 variable "vpc_id" {
