@@ -11,17 +11,11 @@ write_files:
   - content: |
       #!/bin/bash
 
-      # config DNS servers
-      cat > /etc/resolv.conf <<EOF 
-      nameserver 8.8.8.8
-      nameserver 8.8.4.4
-      EOF
-
       # update repo
       apt-get update
 
       # instlall curl, net-tools, wget, git
-      apt-get install -y curl net-tools wget git tree python-git vim
+      apt-get install -y curl net-tools wget git tree python-git vim mysql-client
 
       # Instlall saltstack
       curl -o saltstack_bootstrap.sh -L https://bootstrap.saltstack.com

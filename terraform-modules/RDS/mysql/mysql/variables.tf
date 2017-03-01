@@ -99,3 +99,8 @@ variable "db_name" {
 variable "role" {
   description = "Functional role of DB instance."
 }
+
+// Variables for DNS
+variable "private_zone_id" {}
+variable "dns_name" {}
+

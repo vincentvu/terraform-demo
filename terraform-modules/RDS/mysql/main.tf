@@ -33,3 +33,14 @@ resource "aws_db_instance" "mysql" {
     Roles = "${var.role}"
   }
 }
+
+/*
+* Configure internal DNS for the RDS
+*/
+resource "aws_route53_record" "private-dns" {
+  zone_id = "${var.private_zone_id}"
+  name = "${var.dns_name}"
+  type = "CNAME"
+  ttl = "300"
+  records = ["${aws_db_instance.mysql.address}"]
+}

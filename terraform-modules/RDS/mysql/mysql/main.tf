@@ -33,3 +33,20 @@ resource "aws_db_instance" "mysql" {
     Roles = "${var.role}"
   }
 }
+
+/*
+* Configure internal DNS for the RDS
+*/
+resource "aws_route53_record" "private-dns" {
+  zone_id = "${var.private_zone_id}"
+  name = "${var.dns_name}"
+  type = "A"
+  ttl = "300"
+  records = ["${aws_db_instance.mysql.endpoint}"]
+  
+  alias {
+    zone_id = "${aws_db_instance.mysql.hosted_zone_id}"
+    name = "${aws_db_instance.mysql.endpoint}"
+    evaluate_target_health = true
+  }
+}
